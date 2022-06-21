@@ -9,10 +9,12 @@ import requests
 import wikipedia
 from django.contrib.auth.decorators import login_required
 
-
+# Home Section
 def home(request):
     return render(request, 'dashboard/home.html')
+     
 
+# Notes Section
 @login_required
 def notes(request):
     if request.method == "POST":
@@ -27,7 +29,7 @@ def notes(request):
     return render(request, 'dashboard/notes.html', {"notes":notes, "form":form})
 
 
-
+# Delete Notes
 @login_required
 def delete_note(request, pk=None):
     Notes.objects.get(id=pk).delete()
@@ -37,6 +39,8 @@ def delete_note(request, pk=None):
 class view_notes(generic.DetailView):
     model = Notes
 
+
+# Homework Section
 @login_required
 def homework(request):
     if request.method == 'POST':
@@ -64,6 +68,7 @@ def homework(request):
     return render(request, 'dashboard/homework.html', context)
 
 
+# Update Homework
 @login_required
 def update_homework(request, pk=None):
     homework = Homework.objects.get(id=pk)
@@ -74,12 +79,15 @@ def update_homework(request, pk=None):
     homework.save()
     return redirect('homework')
 
+
+# Delete Homework
 @login_required
 def delete_homework(request, pk=None):
     Homework.objects.get(id=pk).delete()
     return redirect("homework")
 
 
+# Youtube Section
 def youtube(request):
     if request.method == "POST":
         form = DashboardForm(request.POST)
@@ -113,6 +121,9 @@ def youtube(request):
     context = {"form":form}  
     return render(request, 'dashboard/youtube.html', context)
 
+
+
+# Todo Section
 @login_required
 def todo(request):
     if request.method == 'POST':
@@ -144,6 +155,7 @@ def todo(request):
     return render(request, 'dashboard/todo.html', context)
 
 
+# Update Todo
 @login_required
 def update_todo(request, pk=None):
     todo = Todo.objects.get(id=pk)
@@ -154,13 +166,15 @@ def update_todo(request, pk=None):
     todo.save()
     return redirect('todo')
 
+
+# Delete Todo
 @login_required
 def delete_todo(request, pk=None):
     Todo.objects.get(id=pk).delete()
     return redirect("todo")
 
 
-    
+# Book Section  
 def books(request):
     if request.method == "POST":
         form = DashboardForm(request.POST)
@@ -192,7 +206,7 @@ def books(request):
     return render(request, 'dashboard/books.html', context)
 
 
-
+# Dictionary Section
 def dictionary(request):
     if request.method == "POST":
         text = request.POST['text']
@@ -227,7 +241,7 @@ def dictionary(request):
     return render(request, 'dashboard/dictionary.html', {'form': form})
 
 
-
+# Wikipedia Section
 def wiki(request):
     if request.method == 'POST':
         text = request.POST['text']
@@ -246,6 +260,7 @@ def wiki(request):
     return render(request, 'dashboard/wiki.html', context)
 
 
+# Calculater Section
 def calculator(request):
     ans=''
     try:
